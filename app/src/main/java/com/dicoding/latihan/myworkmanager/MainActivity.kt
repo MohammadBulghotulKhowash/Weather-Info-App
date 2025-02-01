@@ -7,7 +7,9 @@ import android.widget.Toast
 import android.Manifest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.work.Constraints
 import androidx.work.Data
+import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.dicoding.latihan.myworkmanager.databinding.ActivityMainBinding
@@ -50,6 +52,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding?.textStatus?.text = getString(R.string.status)
         val dataBuilder = Data.Builder()
             .putString(MyWorker.EXTRA_CITY, binding?.editCity?.text.toString())
+            .build()
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
         val oneTimeWorkRequest = OneTimeWorkRequest.Builder(MyWorker::class.java)
             .setInputData(dataBuilder)
